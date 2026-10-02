@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ExpenseFlow | Admin</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                E
+            </div>
+
+            <div>
+                <h2>ExpenseFlow</h2>
+                <span>Administration</span>
+            </div>
+
+        </div>
+
+
+        <nav>
+
+            <a href="#" class="nav-item active">
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+            <a href="#expenses" class="nav-item">
+                <span>▤</span>
+                Expenses
+            </a>
+
+            <a href="#users" class="nav-item">
+                <span>♙</span>
+                Users
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="admin-profile">
+
+                <div class="admin-avatar">
+                    A
+                </div>
+
+                <div>
+
+                    <strong>Administrator</strong>
+
+                    <small>
+                        System Admin
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Main -->
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>Admin Dashboard</h1>
+
+                <p>
+                    Monitor users and manage expense approvals
+                </p>
+
+            </div>
+
+            <div class="system-status">
+
+                <span></span>
+
+                All systems operational
+
+            </div>
+
+        </header>
+
+
+        <!-- Statistics -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-icon blue">
+                    ♙
+                </div>
+
+                <div>
+
+                    <span>Total Users</span>
+
+                    <h2 id="totalUsers">
+                        0
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon orange">
+                    ◷
+                </div>
+
+                <div>
+
+                    <span>Pending Expenses</span>
+
+                    <h2 id="pendingExpenses">
+                        0
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon green">
+                    ✓
+                </div>
+
+                <div>
+
+                    <span>Approved</span>
+
+                    <h2 id="approvedExpenses">
+                        0
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon purple">
+                    ₹
+                </div>
+
+                <div>
+
+                    <span>Total Expense Value</span>
+
+                    <h2 id="totalValue">
+                        ₹0
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Expenses -->
+
+        <section
+            class="panel"
+            id="expenses"
+        >
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h2>Expense Approvals</h2>
+
+                    <p>
+                        Review and manage submitted expenses
+                    </p>
+
+                </div>
+
+                <button
+                    class="refresh-btn"
+                    onclick="loadExpenses()"
+                >
+                    ↻ Refresh
+                </button>
+
+            </div>
+
+
+            <div class="filter-bar">
+
+                <button
+                    class="filter active"
+                    onclick="filterExpenses('ALL', this)"
+                >
+                    All
+                </button>
+
+                <button
+                    class="filter"
+                    onclick="filterExpenses('PENDING', this)"
+                >
+                    Pending
+                </button>
+
+                <button
+                    class="filter"
+                    onclick="filterExpenses('APPROVED', this)"
+                >
+                    Approved
+                </button>
+
+                <button
+                    class="filter"
+                    onclick="filterExpenses('REJECTED', this)"
+                >
+                    Rejected
+                </button>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Expense</th>
+
+                            <th>Employee</th>
+
+                            <th>Category</th>
+
+                            <th>Amount</th>
+
+                            <th>Status</th>
+
+                            <th>Submitted</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="expenseTable">
+
+                        <tr>
+
+                            <td
+                                colspan="7"
+                                class="empty"
+                            >
+                                Loading expenses...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- Users -->
+
+        <section
+            class="panel users-panel"
+            id="users"
+        >
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h2>Registered Users</h2>
+
+                    <p>
+                        Manage application users
+                    </p>
+
+                </div>
+
+                <button
+                    class="refresh-btn"
+                    onclick="loadUsers()"
+                >
+                    ↻ Refresh
+                </button>
+
+            </div>
+
+
+            <div class="users-grid" id="usersGrid">
+
+                <p class="empty">
+                    Loading users...
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="app.js"></script>
+
+</body>
+
+</html>

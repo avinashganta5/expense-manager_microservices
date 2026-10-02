@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ExpenseFlow | My Expenses</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">E</div>
+
+            <div>
+                <h2>ExpenseFlow</h2>
+                <span>Expense Manager</span>
+            </div>
+        </div>
+
+        <nav>
+
+            <a href="#" class="nav-item active">
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+            <a href="#expenses-section" class="nav-item">
+                <span>▤</span>
+                My Expenses
+            </a>
+
+            <a href="#add-expense" class="nav-item">
+                <span>＋</span>
+                Add Expense
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="user-mini">
+
+                <div class="avatar" id="sidebarAvatar">
+                    U
+                </div>
+
+                <div>
+                    <strong id="sidebarName">
+                        Guest User
+                    </strong>
+
+                    <small id="sidebarEmail">
+                        Not registered
+                    </small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Main -->
+    <main class="main">
+
+        <!-- Topbar -->
+        <header class="topbar">
+
+            <div>
+                <h1>Dashboard</h1>
+
+                <p>
+                    Manage and track your expenses
+                </p>
+            </div>
+
+            <div class="topbar-actions">
+
+                <span class="connection">
+                    <span class="connection-dot"></span>
+                    System Online
+                </span>
+
+                <button
+                    class="primary-btn"
+                    onclick="openExpenseModal()"
+                >
+                    + Add Expense
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- User Setup -->
+        <section class="setup-card" id="setupCard">
+
+            <div class="setup-icon">
+                👋
+            </div>
+
+            <div class="setup-content">
+
+                <h3>Welcome to ExpenseFlow</h3>
+
+                <p>
+                    Register your account or enter your existing
+                    User ID to manage your expenses.
+                </p>
+
+            </div>
+
+            <div class="setup-actions">
+
+    <button
+        class="secondary-btn"
+        onclick="openRegisterModal()"
+    >
+        Create Account
+    </button>
+
+    <input
+        type="number"
+        id="userId"
+        placeholder="User ID"
+    >
+
+    <button
+        class="secondary-btn"
+        onclick="loadUser()"
+    >
+        Load Account
+    </button>
+
+</div>
+
+
+        </section>
+
+
+        <!-- Stats -->
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+                    <span>Total Spending</span>
+
+                    <div class="stat-icon blue">
+                        ₹
+                    </div>
+                </div>
+
+                <h2 id="totalAmount">₹0</h2>
+
+                <p class="stat-description">
+                    All recorded expenses
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+                    <span>Pending</span>
+
+                    <div class="stat-icon orange">
+                        ◷
+                    </div>
+                </div>
+
+                <h2 id="pendingAmount">₹0</h2>
+
+                <p class="stat-description">
+                    Awaiting approval
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+                    <span>Approved</span>
+
+                    <div class="stat-icon green">
+                        ✓
+                    </div>
+                </div>
+
+                <h2 id="approvedAmount">₹0</h2>
+
+                <p class="stat-description">
+                    Approved expenses
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+                    <span>Transactions</span>
+
+                    <div class="stat-icon purple">
+                        #
+                    </div>
+                </div>
+
+                <h2 id="expenseCount">0</h2>
+
+                <p class="stat-description">
+                    Total transactions
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Content Grid -->
+        <section class="content-grid">
+
+            <!-- Recent Expenses -->
+            <div class="panel large-panel" id="expenses-section">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h2>Recent Expenses</h2>
+
+                        <p>
+                            Your latest expense activity
+                        </p>
+                    </div>
+
+                    <button
+                        class="text-btn"
+                        onclick="loadExpenses()"
+                    >
+                        Refresh ↻
+                    </button>
+
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Expense</th>
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th></th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="expenseTable">
+
+                            <tr>
+                                <td
+                                    colspan="6"
+                                    class="empty"
+                                >
+                                    No expenses loaded.
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- Account -->
+            <div class="panel account-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h2>My Account</h2>
+
+                        <p>
+                            Account information
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="profile">
+
+                    <div class="profile-avatar" id="profileAvatar">
+                        U
+                    </div>
+
+                    <h3 id="profileName">
+                        Guest User
+                    </h3>
+
+                    <p id="profileEmail">
+                        No account loaded
+                    </p>
+
+                </div>
+
+                <div class="account-info">
+
+                    <div>
+                        <span>User ID</span>
+                        <strong id="profileId">—</strong>
+                    </div>
+
+                    <div>
+                        <span>Account Status</span>
+                        <strong class="active-text">
+                            Active
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Add Expense -->
+        <section
+            class="panel add-section"
+            id="add-expense"
+        >
+
+            <div class="panel-header">
+
+                <div>
+                    <h2>Add New Expense</h2>
+
+                    <p>
+                        Submit an expense for administrator approval.
+                    </p>
+                </div>
+
+            </div>
+
+            <form id="expenseForm" class="expense-form">
+
+                <div class="form-group">
+
+                    <label>Expense Title</label>
+
+                    <input
+                        type="text"
+                        id="expenseTitle"
+                        placeholder="e.g. Flight Ticket"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Amount</label>
+
+                    <input
+                        type="number"
+                        id="expenseAmount"
+                        placeholder="0.00"
+                        step="0.01"
+                        min="1"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Category</label>
+
+                    <select
+                        id="expenseCategory"
+                        required
+                    >
+
+                        <option value="">
+                            Select category
+                        </option>
+
+                        <option value="TRAVEL">
+                            Travel
+                        </option>
+
+                        <option value="FOOD">
+                            Food
+                        </option>
+
+                        <option value="HOTEL">
+                            Hotel
+                        </option>
+
+                        <option value="OFFICE">
+                            Office
+                        </option>
+
+                        <option value="OTHER">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="form-group full">
+
+                    <label>Description</label>
+
+                    <textarea
+                        id="expenseDescription"
+                        placeholder="Add a short description..."
+                    ></textarea>
+
+                </div>
+
+                <div class="form-actions">
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                    >
+                        Submit Expense
+                    </button>
+
+                    <span id="expenseMessage"></span>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- Register Modal -->
+
+<div
+    class="modal"
+    id="registerModal"
+>
+
+    <div class="modal-box">
+
+        <button
+            class="modal-close"
+            onclick="closeRegisterModal()"
+        >
+            ×
+        </button>
+
+        <div class="modal-icon">
+            E
+        </div>
+
+        <h2>Create your account</h2>
+
+        <p>
+            Start managing your expenses with ExpenseFlow.
+        </p>
+
+        <form id="registerForm">
+
+            <div class="form-group">
+
+                <label>Full Name</label>
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Your name"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Email Address</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="you@example.com"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Minimum 6 characters"
+                    required
+                >
+
+            </div>
+
+            <button
+                type="submit"
+                class="primary-btn full-btn"
+            >
+                Create Account
+            </button>
+
+        </form>
+
+        <p id="registerMessage"></p>
+
+    </div>
+
+</div>
+
+
+<script src="app.js"></script>
+
+</body>
+
+</html>
